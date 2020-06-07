@@ -6,6 +6,8 @@ from scipy.spatial import Voronoi, voronoi_plot_2d
 import random
 import pandas as pd
 import sys
+import os 
+from datetime import date
 class TowerPlanning():
 
 	def __init__(self,dim,main_cities,total_population,min_c,max_c,budget,RequiredRegions,NeighborsToCover,PopulationData=None):
@@ -21,6 +23,21 @@ class TowerPlanning():
 		self.Usedbudget = None
 		self.CoveredRegion = None
 		self.NeighborsToCover = NeighborsToCover
+		#creating Directory
+		try:
+			os.mkdir('./result/')  
+			os.mkdir('./result/'+str(self.RequiredRegions)+'/')  
+			os.mknod('./result/'+str(self.RequiredRegions)+'/ResultSummary.txt')
+		except:
+			pass
+		self.f = open('./result/'+str(self.RequiredRegions)+'/ResultSummary.txt',"w")
+		self.f.write('\n\n\n'+str(date.today()))
+
+		#Creating Folder
+		try:
+			os.mknod('Result.csv')
+		except:
+			pass
 
 	def GeneratePopulation(self,):
 		'''
@@ -48,6 +65,7 @@ class TowerPlanning():
 		#Visualization of population generation
 		plt.scatter(main_population[:,0], main_population[:,1], marker = '.',color="red", s=10, label="City People")
 		plt.scatter(other_population[:,0],other_population[:,1],  marker = '.' , color="green", s=10, label="Scattered/Temporary People")
+
 		# plt.show()
 
 		self.PopulationData = np.concatenate((main_population, other_population))
@@ -84,6 +102,15 @@ class TowerPlanning():
 		region_centers = kmeans.cluster_centers_
 		return cluster_label, region_centers
 
+	def ResultPlot(self,locations):
+		plt.clf()
+		self.VoronoiDiagram(locations)
+		for i in range(len(locations)):
+			plt.text(locations[i][0],locations[i][1],str(i), fontsize=15)
+		plt.scatter(self.PopulationData[:,0],self.PopulationData[:,1],  marker = '.' , color="green", s=10, label="Scattered/Temporary People")
+		plt.savefig('./result/'+str(self.RequiredRegions)+'/FinalResult.png')
+
+
 	def cell_tower_problem(self,AllocatedFacilityData,RegionWisePopulation):
 		print('AllocatedFacilityData: ', AllocatedFacilityData)
 		print('RegionWisePopulation: ', RegionWisePopulation)
@@ -119,7 +146,7 @@ class TowerPlanning():
 			cost.append(sum)
 
 		RegionKey = [*range(0,len(AllocatedFacilityData))]
-		print('RegionKey: ', RegionKey)
+
 		RegionValue = []
 		coverageData = []
 		for i in range(len(AllocatedFacilityData)):
@@ -127,7 +154,6 @@ class TowerPlanning():
 			coverageData.append(cost[i])
 			RegionValue.append(coverageData)
 		RegionDict = dict(zip(RegionKey,RegionValue))
-		print('RegionDict: ', RegionDict)
 
 		# print('RegionDict: ', RegionDict)
 
@@ -164,7 +190,7 @@ class TowerPlanning():
 		for tower in build.keys():
 			if (abs(build[tower].x) > 1e-6):
 				print(f"\n Build a cell tower at location Tower {tower}.")
-		
+				self.f.write("\n Build a cell tower at location Tower "+str(tower))
 		# Percentage of the population covered by the cell towers built is computed as follows.
 
 		total_population = 0
@@ -175,7 +201,7 @@ class TowerPlanning():
 		self.CoveredRegion = round(100*m.objVal/total_population, 2)
 
 		print(f"\n The population coverage associated to the cell towers build plan is: {self.CoveredRegion} %")
-
+		self.f.write("\n The population coverage associated to the cell towers build plan is: "+str(self.CoveredRegion))
 		# Percentage of budget consumed to build cell towers
 		total_cost = 0
 
@@ -188,7 +214,9 @@ class TowerPlanning():
 			return 0,0
 
 		print(f"\n The percentage of budget consumed associated to the cell towers build plan is: {self.Usedbudget} %")
-		
+		self.f.write("\n The percentage of budget consumed associated to the cell towers build plan is: "+str(self.Usedbudget))
+		return build.keys()
+
 	def VoronoiDiagram(self,centers):
 		'''
 		This method will generate voronoi diagram 
@@ -197,7 +225,6 @@ class TowerPlanning():
 		vor = Voronoi(centers)
 		voronoi_plot_2d(vor)
 		vertices = vor.vertices #coord of voronoi vertices
-		print('vertices: ', vertices)
 		# ind_reg = vor.regions #indices of voronoi vertices
 		# print('ind_reg: ', ind_reg)
 		# ind_redig_verti = vor.ridge_vertices #indices of voronoi vertices forming ridge
@@ -240,16 +267,15 @@ class TowerPlanning():
 		
 		#voronoi diagram 
 		vertices = self.VoronoiDiagram(region_centers)
+		
 
 		#finding nearest centroid from each vertex 
 		AllocatedFacilityData = self.DistBtnVertex_Centroid(vertices,region_centers)
-		print('allocated_facility: ', AllocatedFacilityData)
 
 
 		#Writing center on graph plot 
 		for i in range(len(region_centers)):
 			plt.text(region_centers[i][0],region_centers[i][1],str(i), fontsize=15)
-		print('region_centers: ', region_centers)
 		
 		#writing vertex on plot
 		for i in range(len(vertices)):
@@ -270,17 +296,24 @@ class TowerPlanning():
 			color = "#%06x" % random.randint(0, 0xFFFFFF)
 			plt.scatter(temp_data[:,0],temp_data[:,1],c=color,marker='.',label='cluster'+str(i))
 		plt.legend()
-
+		plt.savefig('./result/'+str(self.RequiredRegions)+'/Regions.png')
 		#optimizing 	
-		self.cell_tower_problem(AllocatedFacilityData,RegionWisePopulation)
+		IndexOfNodesToBuild = self.cell_tower_problem(AllocatedFacilityData,RegionWisePopulation)
+		NodesToBuild = []
+		
+		for i in range(len(IndexOfNodesToBuild)):
+			NodesToBuild.append(vertices[IndexOfNodesToBuild[i]])
+		print('NodesToBuild: ', NodesToBuild)
+		self.ResultPlot(NodesToBuild)
+		self.f.close()
 		return self.Usedbudget, self.CoveredRegion
 
 if __name__ == "__main__":
 	## Parameters
 	dim = 2 #dimension
 	main_cities = 5  #to generate data points
-	total_population = 500
-	NeighborsToCover = 4
+	total_population = 1000
+	NeighborsToCover = 3
 	budget = 2000 #lakhs
 
 	#area
@@ -288,12 +321,24 @@ if __name__ == "__main__":
 	max_c = 20
 
 	RequiredRegions = sys.argv[1] #to generate clusters
+	headers = ['Regions','Coverage','Budget']
+	
+	
+	TP = TowerPlanning(dim,main_cities,total_population,min_c,max_c,budget,int(RequiredRegions),NeighborsToCover)
+	TP.GeneratePopulation()
+	try:
+		result = pd.read_csv('Result.csv')
+	except pd.errors.EmptyDataError :
+		result = pd.DataFrame([],columns=headers)
 	if(RequiredRegions.isnumeric()):
 		# coverage , budget  = Simulate(population,self.NeighborsToCover,budget,8)
-		TP = TowerPlanning(dim,main_cities,total_population,min_c,max_c,budget,int(RequiredRegions),NeighborsToCover)
-		TP.GeneratePopulation()
 		coverage , budget  = TP.Simulate()
-		plt.show()
+		append_data = [int(RequiredRegions),coverage,budget]
+		resu = pd.DataFrame([append_data],columns=headers)
+		result = pd.concat([result,resu])
+		result.to_csv('result.csv',index=False)
+		# plt.show()
+		plt.close('all')
 	else:
 		print('Pass Integer')
 
