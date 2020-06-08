@@ -26,10 +26,19 @@ class TowerPlanning():
 		#creating Directory
 		try:
 			os.mkdir('./result/')  
-			os.mkdir('./result/'+str(self.RequiredRegions)+'/')  
-			os.mknod('./result/'+str(self.RequiredRegions)+'/ResultSummary.txt')
-		except:
+		except FileExistsError:
 			pass
+			
+		try:
+			os.mkdir('./result/'+str(self.RequiredRegions)+'/')  
+		except FileExistsError:
+			pass
+		
+		try:
+			os.mknod('./result/'+str(self.RequiredRegions)+'/ResultSummary.txt')
+		except FileExistsError:
+			pass
+		
 		self.f = open('./result/'+str(self.RequiredRegions)+'/ResultSummary.txt',"w")
 		self.f.write('\n\n\n'+str(date.today()))
 
@@ -55,7 +64,7 @@ class TowerPlanning():
 		10% of population is scattered for business or store or other purpose
 		'''
 		#90%
-		main_population, y = make_blobs(n_samples=int(self.total_population * 0.9),cluster_std=1.5, centers=self.main_cities, center_box=(self.min_c, self.max_c) ,n_features=self.dim,random_state=41)
+		main_population, y = make_blobs(n_samples=int(self.total_population * 0.9),cluster_std=50, centers=self.main_cities, center_box=(self.min_c, self.max_c) ,n_features=self.dim,random_state=41)
 		#10%
 		other_population = np.zeros((int(0.3*total_population),self.dim))
 
@@ -75,6 +84,7 @@ class TowerPlanning():
 		This method will generate clusters 
 		'''
 		from sklearn.cluster import KMeans
+		from sklearn.cluster import DBSCAN
 		import sklearn
 		# silhouette_score_values= []
 	
@@ -97,18 +107,27 @@ class TowerPlanning():
 		# self.RequiredRegions=NumberOfClusters[silhouette_score_values.index(max(silhouette_score_values))]
 		# print("Optimal number of components is:")
 		# print(self.RequiredRegions)
+
+		##Kmeans
 		kmeans = KMeans(n_clusters=self.RequiredRegions, init='k-means++', max_iter=100, n_init=1, verbose=0, random_state=3425).fit(self.PopulationData)
 		cluster_label  = kmeans.labels_
 		region_centers = kmeans.cluster_centers_
 		return cluster_label, region_centers
 
-	def ResultPlot(self,locations):
+
+	def ResultPlot(self,FinalNodes,region_centers):
+		print('region_centers: ', region_centers)
+		print('FinalNodes: ', FinalNodes)
 		plt.clf()
-		self.VoronoiDiagram(locations)
-		for i in range(len(locations)):
-			plt.text(locations[i][0],locations[i][1],str(i), fontsize=15)
+		self.VoronoiDiagram(region_centers)
 		plt.scatter(self.PopulationData[:,0],self.PopulationData[:,1],  marker = '.' , color="green", s=10, label="Scattered/Temporary People")
-		plt.savefig('./result/'+str(self.RequiredRegions)+'/FinalResult.png')
+		for i in range(len(FinalNodes)):
+			plt.scatter(FinalNodes[i][0],FinalNodes[i][1],marker = 'x' , color="red",label="TowerLocation"+str(i))
+			plt.text(FinalNodes[i][0]+0.25,FinalNodes[i][1]+0.25,str(i), fontsize=15)
+		# plt.ylim(self.min_c, self.max_c)
+		# plt.xlim(self.min_c,self.max_c)
+		plt.legend()
+		plt.savefig('./result/'+str(self.RequiredRegions)+'/FinalResult.eps')
 
 
 	def cell_tower_problem(self,AllocatedFacilityData,RegionWisePopulation):
@@ -123,6 +142,7 @@ class TowerPlanning():
 		# tested with Gurobi v9.0.0 and Python 3.7.0
 		Populationkey = [*range(0,len(self.PopulationData))]
 		PopulationDict = dict(zip(Populationkey,RegionWisePopulation))
+		print('PopulationDict: ', PopulationDict)
 		regions, population = gp.multidict(PopulationDict)
 
 		# # Parameters
@@ -154,6 +174,7 @@ class TowerPlanning():
 			coverageData.append(cost[i])
 			RegionValue.append(coverageData)
 		RegionDict = dict(zip(RegionKey,RegionValue))
+		print('RegionDict: ', RegionDict)
 
 		# print('RegionDict: ', RegionDict)
 
@@ -186,11 +207,13 @@ class TowerPlanning():
 		m.optimize() 
 
 		# display optimal values of decision variables
-
+		
+		LocationFound = []
 		for tower in build.keys():
 			if (abs(build[tower].x) > 1e-6):
 				print(f"\n Build a cell tower at location Tower {tower}.")
 				self.f.write("\n Build a cell tower at location Tower "+str(tower))
+				LocationFound.append(tower)
 		# Percentage of the population covered by the cell towers built is computed as follows.
 
 		total_population = 0
@@ -215,7 +238,7 @@ class TowerPlanning():
 
 		print(f"\n The percentage of budget consumed associated to the cell towers build plan is: {self.Usedbudget} %")
 		self.f.write("\n The percentage of budget consumed associated to the cell towers build plan is: "+str(self.Usedbudget))
-		return build.keys()
+		return LocationFound
 
 	def VoronoiDiagram(self,centers):
 		'''
@@ -231,27 +254,31 @@ class TowerPlanning():
 		# print('ind_redig_verti: ', ind_redig_verti)
 		# ind_ver_poi = vor.ridge_points #indices of each voronoi between which each voronoi lies
 		# print('ind_ver_poi: ', ind_ver_poi)
-		return vertices
+		# return vertices
 
-	def DistBtnVertex_Centroid(self,vertices,region_centers):
+	def DistBtnCentroidNNeighbor(self,region_centers):
 		'''
 		This method will find nearest three centroid from the vertex
 		return : methos will return 
 		'''
-		headers = ['vertex']
+		headers = ['RegionCenter']
 		for i in range(self.NeighborsToCover):
-			headers.append('centroid_index_'+str(i))
+			headers.append('NeighborCenter'+str(i))
 
 		dataframe = pd.DataFrame([],dtype=int)
 
-		for i in range(len(vertices)): #for all vertices
+		for i in range(len(region_centers)): #find nearest centroid from all
 			data_array = np.array([i])
 			measured_dist = []
 			for j in range(len(region_centers)):
-				measured_dist.append(self.CalculateEuclidianDist(vertices[i],region_centers[j]))
-			data_array = np.concatenate((data_array,np.argsort(measured_dist)[:self.NeighborsToCover]))
+					measured_dist.append(self.CalculateEuclidianDist(region_centers[i],region_centers[j]))
+			print('measured_dist: ', measured_dist)
+			data_array = np.concatenate((data_array,np.argsort(measured_dist)[1:self.NeighborsToCover+1]))
+			print('np.argsort(measured_dist)[:self.NeighborsToCover]): ', np.argsort(measured_dist)[1:self.NeighborsToCover+1])
+			print('np.argsort(measured_dist): ', np.argsort(measured_dist))
 			dataframe = dataframe.append(pd.Series(list(data_array)),ignore_index=True)
 		dataframe = dataframe.astype('int64', copy=False)
+		print('dataframe: ', dataframe)
 		dataframe.columns = headers
 		return dataframe
 
@@ -261,25 +288,40 @@ class TowerPlanning():
 		'''
 		dist = np.linalg.norm((array1-array2))
 		return dist
+	
+	def FindFinalNode(self,region_centers,IndexOfNodesToBuild,AllocatedFacilityData):
+		print('region_centers: ', region_centers)
+		FinalNodes = []
+		
+		for i in range(len(IndexOfNodesToBuild)):
+			temp_nodes = []
+			for j in range(self.NeighborsToCover+1):
+				temp_nodes.append(region_centers[AllocatedFacilityData.iloc[IndexOfNodesToBuild[i],:][j]])
+				print('region_centers[AllocatedFacilityData.iloc[IndexOfNodesToBuild[i],:][j]]: ', region_centers[AllocatedFacilityData.iloc[IndexOfNodesToBuild[i],:][j]])
+			FinalNodes.append(sum(temp_nodes) / len(temp_nodes))
+			print('FinalNodes: ', FinalNodes)
+		return FinalNodes
+	
 
 	def Simulate(self,):
 		population_label , region_centers = self.GenerateClusters()
 		
 		#voronoi diagram 
-		vertices = self.VoronoiDiagram(region_centers)
+		self.VoronoiDiagram(region_centers)
 		
 
 		#finding nearest centroid from each vertex 
-		AllocatedFacilityData = self.DistBtnVertex_Centroid(vertices,region_centers)
+		AllocatedFacilityData = self.DistBtnCentroidNNeighbor(region_centers)
+		print('AllocatedFacilityData: ', AllocatedFacilityData)
 
 
 		#Writing center on graph plot 
 		for i in range(len(region_centers)):
 			plt.text(region_centers[i][0],region_centers[i][1],str(i), fontsize=15)
 		
-		#writing vertex on plot
-		for i in range(len(vertices)):
-			plt.text(vertices[i][0],vertices[i][1],str(i), fontsize=15)
+		# #writing vertex on plot
+		# for i in range(len(vertices)):
+		# 	plt.text(vertices[i][0],vertices[i][1],str(i), fontsize=15)
 
 		#Visualization population Regions
 		regional_data = [] #clusterwise data
@@ -296,33 +338,35 @@ class TowerPlanning():
 			color = "#%06x" % random.randint(0, 0xFFFFFF)
 			plt.scatter(temp_data[:,0],temp_data[:,1],c=color,marker='.',label='cluster'+str(i))
 		plt.legend()
-		plt.savefig('./result/'+str(self.RequiredRegions)+'/Regions.png')
+		plt.savefig('./result/'+str(self.RequiredRegions)+'/Regions.eps')
 		#optimizing 	
 		IndexOfNodesToBuild = self.cell_tower_problem(AllocatedFacilityData,RegionWisePopulation)
-		NodesToBuild = []
-		
-		for i in range(len(IndexOfNodesToBuild)):
-			NodesToBuild.append(vertices[IndexOfNodesToBuild[i]])
-		print('NodesToBuild: ', NodesToBuild)
-		self.ResultPlot(NodesToBuild)
+		print('IndexOfNodesToBuild: ', IndexOfNodesToBuild)
+		FinalNodes  = self.FindFinalNode(region_centers,IndexOfNodesToBuild,AllocatedFacilityData)
+		self.ResultPlot(FinalNodes,region_centers)
 		self.f.close()
 		return self.Usedbudget, self.CoveredRegion
 
 if __name__ == "__main__":
-	## Parameters
+
+	#For Population
 	dim = 2 #dimension
 	main_cities = 5  #to generate data points
-	total_population = 1000
-	NeighborsToCover = 3
-	budget = 2000 #lakhs
+
+	## Parameters
+	total_population = 1000000
+	NeighborsToCover = 6
 
 	#area
 	min_c = 10
-	max_c = 20
+	max_c = 50
 
 	RequiredRegions = sys.argv[1] #to generate clusters
 	headers = ['Regions','Coverage','Budget']
 	
+	#Budget
+	# 10%  of the total population and 30,00,000 Rupees cost for average tower building cost
+	budget = 100000 * 0.1 + 3000000 * RequiredRegions #lakhs
 	
 	TP = TowerPlanning(dim,main_cities,total_population,min_c,max_c,budget,int(RequiredRegions),NeighborsToCover)
 	TP.GeneratePopulation()
