@@ -1,7 +1,7 @@
 
 
 
-2020-06-08
+2020-06-09
  Build a cell tower at location Tower 0
  Build a cell tower at location Tower 1
  Build a cell tower at location Tower 2

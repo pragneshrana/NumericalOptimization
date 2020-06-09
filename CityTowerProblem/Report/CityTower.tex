@@ -198,13 +198,29 @@
 \tableofcontents
 
 \section{Problem Statement}
+In city planning, the issue is to place towers for given the population. Divide the population into region based on maximum capacity to plant tower sites. Out of all possible cell tower cites, find out the optimal tower location such that maximum  population is served within limit of budget constrain.
 
-To solve the defined problem, SMDP and Intra-option Q learning is utilized. The optimal policy is the fundamental thing for used methods. To obtain the optimal policy using Q-learning, the initial states were randomly selected and goal is directed to hallway. likewise, eight policy is obtained. The state values are obtained using the maximum return.
 
+
+
+\section{Approach to tackle the problem}
+
+\section{Assumptions}
+Assumed that,
+\begin{itemize}
+	\item The city is a rectangular region
+	\item
+\end{itemize}
+
+
+\section{Formulation}
 \begin{equation}
 V(s) = \argmax_{Q(s,a)} 
 \end{equation}
 
+\section{Algorithm}
+\section{Results and Discussion}
+\subsection{Voronoi Diagram of few values of input}
 
 \begin{figure}[H]
 	\centering  
@@ -215,10 +231,9 @@ V(s) = \argmax_{Q(s,a)}
 	\caption{Grid world of four rooms.  Blue:Agent, Green:Terminal The grid world-\ref{grid_a_arrow} has terminal state G1 and grid world-\ref{grid_b_arrow} has terminal state G2. Arrow indicates the optimal policy. The policy in fig-\ref{grid_a_arrow} is obtained using option-1 where as same in fig.-\ref{grid_b_arrow} by option-2 }
 	\label{fig:grids}
 \end{figure}
-\section{Approach to tackle the problem}
-\section{Assumptions}
-\section{Formulation}
-\section{Results and Discussion}
+\subsection{Computational time as a function of input parameters}
+\subsection{Largest problem solution}
+
 
 
 

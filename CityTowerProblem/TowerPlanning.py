@@ -352,18 +352,19 @@ if __name__ == "__main__":
 	#For Population
 	dim = 2 #dimension
 	main_cities = 5  #to generate data points
+	
 
+	#############################
+	#######   Input   ###########
+	#############################
 	## Parameters
-	total_population = 1000000
+	total_population = 10000
 	NeighborsToCover = 6
-
 	#area
 	min_c = 10
 	max_c = 50
-
 	RequiredRegions = sys.argv[1] #to generate clusters
 	headers = ['Regions','Coverage','Budget']
-	
 	#Budget
 	# 10%  of the total population and 30,00,000 Rupees cost for average tower building cost
 	budget = 100000 * 0.1 + 3000000 * RequiredRegions #lakhs
