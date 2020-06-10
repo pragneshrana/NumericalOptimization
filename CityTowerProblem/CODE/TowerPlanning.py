@@ -8,9 +8,11 @@ import pandas as pd
 import sys
 import os 
 from datetime import date
+import time 
+
 class TowerPlanning():
 
-	def __init__(self,dim,main_cities,total_population,min_c,max_c,budget,RequiredRegions,NeighborsToCover,PopulationData=None):
+	def __init__(self,dim,main_cities,total_population,min_c,max_c,budget,RequiredRegions,NeighborsToCover,CostPerEach,PopulationData=None):
 		self.dim = dim
 		self.main_cities = main_cities
 		self.total_population = total_population
@@ -23,6 +25,7 @@ class TowerPlanning():
 		self.Usedbudget = None
 		self.CoveredRegion = None
 		self.NeighborsToCover = NeighborsToCover
+		self.CostPerEach = CostPerEach
 		#creating Directory
 		try:
 			os.mkdir('./result/')  
@@ -45,7 +48,7 @@ class TowerPlanning():
 		#Creating Folder
 		try:
 			os.mknod('Result.csv')
-		except:
+		except FileExistsError:
 			pass
 
 	def GeneratePopulation(self,):
@@ -64,7 +67,7 @@ class TowerPlanning():
 		10% of population is scattered for business or store or other purpose
 		'''
 		#90%
-		main_population, y = make_blobs(n_samples=int(self.total_population * 0.9),cluster_std=50, centers=self.main_cities, center_box=(self.min_c, self.max_c) ,n_features=self.dim,random_state=41)
+		main_population, y = make_blobs(n_samples=int(self.total_population),cluster_std= (self.max_c - self.min_c), centers=self.main_cities, center_box=(self.min_c, self.max_c) ,n_features=self.dim,random_state=41)
 		#10%
 		other_population = np.zeros((int(0.3*total_population),self.dim))
 
@@ -74,7 +77,6 @@ class TowerPlanning():
 		#Visualization of population generation
 		plt.scatter(main_population[:,0], main_population[:,1], marker = '.',color="red", s=10, label="City People")
 		plt.scatter(other_population[:,0],other_population[:,1],  marker = '.' , color="green", s=10, label="Scattered/Temporary People")
-
 		# plt.show()
 
 		self.PopulationData = np.concatenate((main_population, other_population))
@@ -126,8 +128,7 @@ class TowerPlanning():
 			plt.text(FinalNodes[i][0]+0.25,FinalNodes[i][1]+0.25,str(i), fontsize=15)
 		# plt.ylim(self.min_c, self.max_c)
 		# plt.xlim(self.min_c,self.max_c)
-		plt.legend()
-		plt.savefig('./result/'+str(self.RequiredRegions)+'/FinalResult.eps')
+		plt.savefig('./result/'+str(self.RequiredRegions)+'/FinalResult.jpg')
 
 
 	def cell_tower_problem(self,AllocatedFacilityData,RegionWisePopulation):
@@ -163,7 +164,7 @@ class TowerPlanning():
 			RegionsOccupiedByVertex = AllocatedFacilityData.iloc[i,1:]
 			for j in range(self.NeighborsToCover):
 				sum += RegionWisePopulation[RegionsOccupiedByVertex[j]]
-			cost.append(sum)
+			cost.append(sum + self.CostPerEach)
 
 		RegionKey = [*range(0,len(AllocatedFacilityData))]
 
@@ -177,7 +178,6 @@ class TowerPlanning():
 		print('RegionDict: ', RegionDict)
 
 		# print('RegionDict: ', RegionDict)
-
 		# sites, coverage, cost = gp.multidict({
 		# 	0: [[0,1,5], 42],
 		# 	1: [[0,7,8], 61],
@@ -297,9 +297,7 @@ class TowerPlanning():
 			temp_nodes = []
 			for j in range(self.NeighborsToCover+1):
 				temp_nodes.append(region_centers[AllocatedFacilityData.iloc[IndexOfNodesToBuild[i],:][j]])
-				print('region_centers[AllocatedFacilityData.iloc[IndexOfNodesToBuild[i],:][j]]: ', region_centers[AllocatedFacilityData.iloc[IndexOfNodesToBuild[i],:][j]])
 			FinalNodes.append(sum(temp_nodes) / len(temp_nodes))
-			print('FinalNodes: ', FinalNodes)
 		return FinalNodes
 	
 
@@ -337,50 +335,62 @@ class TowerPlanning():
 			regional_data.append(temp_data)
 			color = "#%06x" % random.randint(0, 0xFFFFFF)
 			plt.scatter(temp_data[:,0],temp_data[:,1],c=color,marker='.',label='cluster'+str(i))
-		plt.legend()
-		plt.savefig('./result/'+str(self.RequiredRegions)+'/Regions.eps')
-		#optimizing 	
+		plt.savefig('./result/'+str(self.RequiredRegions)+'/Regions.jpg')
+
+		#optimizing 
+		start = time.time()
 		IndexOfNodesToBuild = self.cell_tower_problem(AllocatedFacilityData,RegionWisePopulation)
-		print('IndexOfNodesToBuild: ', IndexOfNodesToBuild)
+		end = time.time()
+		ElapsedTime = end - start	
+
 		FinalNodes  = self.FindFinalNode(region_centers,IndexOfNodesToBuild,AllocatedFacilityData)
 		self.ResultPlot(FinalNodes,region_centers)
 		self.f.close()
-		return self.Usedbudget, self.CoveredRegion
+		return self.Usedbudget, self.CoveredRegion ,ElapsedTime
 
 if __name__ == "__main__":
 
 	#For Population
 	dim = 2 #dimension
 	main_cities = 5  #to generate data points
+	headers = ['Regions','Coverage','Budget','Execution Time']
 
+	if(sys.argv[1].isnumeric()):
+		RequiredRegions = int(sys.argv[1]) #to generate clusters
+		print('RequiredRegions: ', RequiredRegions)
+	else:
+		print('Pass Integer')
+		exit()
+
+	#############################
+	#######   Input   ###########
+	#############################
 	## Parameters
 	total_population = 100000
-	NeighborsToCover = 2
-	budget = 2000000000 #lakhs
-
+	NeighborsToCover = 3
+	CostPerEach = 3000000
+	budget = 1000000 * RequiredRegions  #lakhs#Budget
 	#area
-	min_c = 10
-	max_c = 50
-
-	RequiredRegions = sys.argv[1] #to generate clusters
-	headers = ['Regions','Coverage','Budget']
+	min_c = 100
+	max_c = 200
+	#############################
+	#############################
 	
-	
-	TP = TowerPlanning(dim,main_cities,total_population,min_c,max_c,budget,int(RequiredRegions),NeighborsToCover)
+	TP = TowerPlanning(dim,main_cities,total_population,min_c,max_c,budget,int(RequiredRegions),NeighborsToCover,CostPerEach)
 	TP.GeneratePopulation()
+	
 	try:
 		result = pd.read_csv('Result.csv')
 	except pd.errors.EmptyDataError :
 		result = pd.DataFrame([],columns=headers)
-	if(RequiredRegions.isnumeric()):
-		# coverage , budget  = Simulate(population,self.NeighborsToCover,budget,8)
-		coverage , budget  = TP.Simulate()
-		append_data = [int(RequiredRegions),coverage,budget]
-		resu = pd.DataFrame([append_data],columns=headers)
-		result = pd.concat([result,resu])
-		result.to_csv('result.csv',index=False)
-		# plt.show()
-		plt.close('all')
-	else:
-		print('Pass Integer')
+	
+	# coverage , budget  = Simulate(population,self.NeighborsToCover,budget,8)
+	coverage , budget , ElapsedTime  = TP.Simulate()
+	append_data = [int(RequiredRegions),coverage,budget,ElapsedTime]
+	resu = pd.DataFrame([append_data],columns=headers)
+	result = pd.concat([result,resu])
+	result.to_csv('Result.csv',index=False)
+	# plt.show()
+	plt.close('all')
+
 
