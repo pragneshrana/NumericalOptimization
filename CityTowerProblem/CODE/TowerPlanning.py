@@ -18,7 +18,6 @@ class TowerPlanning():
 		self.total_population = total_population
 		self.min_c = min_c
 		self.max_c = max_c
-		self.PopulationData = None
 		self.budget = budget
 		self.RequiredRegions = RequiredRegions
 		self.PopulationData = PopulationData
@@ -63,12 +62,12 @@ class TowerPlanning():
 		#Generating clusters
 		from sklearn.datasets import make_blobs
 		'''
-		90% of  the population is assumed to generate cluster of population
-		10% of population is scattered for business or store or other purpose
+		70% of  the population is assumed to generate cluster of population
+		30% of population is scattered for business or store or other purpose
 		'''
-		#90%
-		main_population, y = make_blobs(n_samples=int(self.total_population),cluster_std= (self.max_c - self.min_c), centers=self.main_cities, center_box=(self.min_c, self.max_c) ,n_features=self.dim,random_state=41)
-		#10%
+		#70%
+		main_population, y = make_blobs(n_samples=int(self.total_population)*0.7,cluster_std= (self.max_c - self.min_c), centers=self.main_cities, center_box=(self.min_c, self.max_c) ,n_features=self.dim,random_state=41)
+		#30%
 		other_population = np.zeros((int(0.3*total_population),self.dim))
 
 		for i in range(len(other_population)):
@@ -366,7 +365,7 @@ if __name__ == "__main__":
 	#######   Input   ###########
 	#############################
 	## Parameters
-	total_population = 100000
+	total_population = 130000
 	NeighborsToCover = 3
 	CostPerEach = 3000000
 	budget = 1000000 * RequiredRegions  #lakhs#Budget
