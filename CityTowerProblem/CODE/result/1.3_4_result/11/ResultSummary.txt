@@ -1,0 +1,9 @@
+
+
+
+2020-06-12
+ Build a cell tower at location Tower 2
+ Build a cell tower at location Tower 6
+ Build a cell tower at location Tower 10
+ The population coverage associated to the cell towers build plan is: 89.94
+ The percentage of budget consumed associated to the cell towers build plan is: 82.88

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2018.10.19)  11 JUN 2020 23:53
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2018.10.19)  12 JUN 2020 13:37
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1841,16 +1841,16 @@ LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <12> not available
 (Font)              Font shape `T1/ptm/b/n' tried instead on input line 180.
 LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <10.95> not available
 (Font)              Font shape `T1/ptm/b/n' tried instead on input line 187.
-LaTeX Font Info:    Try loading font information for T1+phv on input line 201.
+LaTeX Font Info:    Try loading font information for T1+phv on input line 200.
 (/usr/share/texlive/texmf-dist/tex/latex/psnfss/t1phv.fd
 File: t1phv.fd 2001/06/04 scalable font definitions for T1/phv.
 )
 LaTeX Font Info:    Font shape `T1/phv/bx/n' in size <17> not available
-(Font)              Font shape `T1/phv/b/n' tried instead on input line 201.
+(Font)              Font shape `T1/phv/b/n' tried instead on input line 200.
 LaTeX Font Info:    Font shape `T1/phv/bx/it' in size <17> not available
-(Font)              Font shape `T1/phv/b/it' tried instead on input line 201.
+(Font)              Font shape `T1/phv/b/it' tried instead on input line 200.
 LaTeX Font Info:    Font shape `T1/phv/b/it' in size <17> not available
-(Font)              Font shape `T1/phv/b/sl' tried instead on input line 201.
+(Font)              Font shape `T1/phv/b/sl' tried instead on input line 200.
  (./CityTower.toc
 LaTeX Font Info:    Try loading font information for OT1+ztmcm on input line 8.
 
@@ -1899,67 +1899,175 @@ LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <7> not available
  [1
 
 {/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}]
-LaTeX Font Info:    Try loading font information for TS1+ptm on input line 211.
+LaTeX Font Info:    Try loading font information for TS1+ptm on input line 210.
 
 
 (/usr/share/texlive/texmf-dist/tex/latex/psnfss/ts1ptm.fd
 File: ts1ptm.fd 2001/06/04 font definitions for TS1/ptm.
-)
+) [2]
+Overfull \hbox (0.73567pt too wide) in paragraph at lines 285--286
+\T1/ptm/m/n/12 gions(cluster) us-ing k-means al-go-rithm which fol-lows the sha
+pe of a poly-gon(Approximation
+ []
 
-LaTeX Warning: Reference `wikiKmeans' on page 2 undefined on input line 232.
+[3]
 
-[2] [3]
-
-LaTeX Warning: Reference `eq:constrain' on page 4 undefined on input line 308.
+LaTeX Warning: Reference `eq:constrain' on page 4 undefined on input line 304.
 
 <./images/./12Regions.jpg, id=102, 462.528pt x 346.896pt>
 File: ./images/./12Regions.jpg Graphic file (type jpg)
 
 <use ./images/./12Regions.jpg>
-Package pdftex.def Info: ./images/./12Regions.jpg used on input line 317.
+Package pdftex.def Info: ./images/./12Regions.jpg used on input line 313.
 (pdftex.def)             Requested size: 201.99121pt x 151.49666pt.
 
 <./images/./12FinalResult.jpg, id=103, 462.528pt x 346.896pt>
 File: ./images/./12FinalResult.jpg Graphic file (type jpg)
 
 <use ./images/./12FinalResult.jpg>
-Package pdftex.def Info: ./images/./12FinalResult.jpg used on input line 319.
+Package pdftex.def Info: ./images/./12FinalResult.jpg used on input line 315.
 (pdftex.def)             Requested size: 201.99121pt x 151.49666pt.
 
-Overfull \hbox (48.53014pt too wide) in paragraph at lines 334--336
+Overfull \hbox (27.17058pt too wide) in paragraph at lines 330--332
  [][] 
  []
 
-[4 <./images/./12Regions.jpg> <./images/./12FinalResult.jpg>]
+[4 <./images/./12Regions.jpg> <./images/./12FinalResult.jpg>] [5]
+Package hyperref Info: bookmark level for unknown algorithm defaults to 0 on in
+put line 375.
+
+Overfull \hbox (18.63971pt too wide) in paragraph at lines 433--434
+[] \T1/ptm/m/n/12 Op-ti-mized-Lo-ca-tions =\T1/ptm/m/sc/12 CellTowerProblem\T1/
+ptm/m/n/12 (AllocatedFacilityData,RegionWisePopulation) 
+ []
+
+
+Overfull \hbox (34.13092pt too wide) in paragraph at lines 434--435
+[] \T1/ptm/m/n/12 Fi-nal-Lo-ca-tions = \T1/ptm/m/sc/12 Fi-nal-Lo-ca-tions\T1/pt
+m/m/n/12 (OptimizedLocation,ClusterCentroid,AllocatedFacilityData) 
+ []
+
 LaTeX Font Info:    Font shape `T1/phv/bx/n' in size <13> not available
-(Font)              Font shape `T1/phv/b/n' tried instead on input line 394.
+(Font)              Font shape `T1/phv/b/n' tried instead on input line 442.
 LaTeX Font Info:    Font shape `T1/phv/bx/it' in size <13> not available
-(Font)              Font shape `T1/phv/b/it' tried instead on input line 394.
+(Font)              Font shape `T1/phv/b/it' tried instead on input line 442.
 LaTeX Font Info:    Font shape `T1/phv/b/it' in size <13> not available
-(Font)              Font shape `T1/phv/b/sl' tried instead on input line 394.
- [5] [6]
-(./CityTower.bbl) [7]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 438.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 438.
- (./CityTower.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 438.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 438.
+(Font)              Font shape `T1/phv/b/sl' tried instead on input line 442.
+[6]
+File: ./images/./12Regions.jpg Graphic file (type jpg)
+ <use ./images/./12Regions.jpg>
+Package pdftex.def Info: ./images/./12Regions.jpg used on input line 458.
+(pdftex.def)             Requested size: 201.99121pt x 151.49666pt.
+File: ./images/./12FinalResult.jpg Graphic file (type jpg)
+ <use ./images/./12FinalResult.jpg>
+Package pdftex.def Info: ./images/./12FinalResult.jpg used on input line 460.
+(pdftex.def)             Requested size: 201.99121pt x 151.49666pt.
+
+<./images/./25Regions.jpg, id=135, 462.528pt x 346.896pt>
+File: ./images/./25Regions.jpg Graphic file (type jpg)
+
+<use ./images/./25Regions.jpg>
+Package pdftex.def Info: ./images/./25Regions.jpg used on input line 478.
+(pdftex.def)             Requested size: 201.99121pt x 151.49666pt.
+
+<./images/./25FinalResult.jpg, id=136, 462.528pt x 346.896pt>
+File: ./images/./25FinalResult.jpg Graphic file (type jpg)
+
+<use ./images/./25FinalResult.jpg>
+Package pdftex.def Info: ./images/./25FinalResult.jpg used on input line 480.
+(pdftex.def)             Requested size: 201.99121pt x 151.49666pt.
+ [7]
+<./images/./50Regions.jpg, id=151, 462.528pt x 346.896pt>
+File: ./images/./50Regions.jpg Graphic file (type jpg)
+
+<use ./images/./50Regions.jpg>
+Package pdftex.def Info: ./images/./50Regions.jpg used on input line 498.
+(pdftex.def)             Requested size: 201.99121pt x 151.49666pt.
+
+<./images/./50FinalResult.jpg, id=152, 462.528pt x 346.896pt>
+File: ./images/./50FinalResult.jpg Graphic file (type jpg)
+
+<use ./images/./50FinalResult.jpg>
+Package pdftex.def Info: ./images/./50FinalResult.jpg used on input line 500.
+(pdftex.def)             Requested size: 201.99121pt x 151.49666pt.
+ [8 <./images/./25Regions.jpg> <./images/./25FinalResult.jpg> <./images/./50Reg
+ions.jpg> <./images/./50FinalResult.jpg>]
+<./images/./25_50_Regions.jpg, id=170, 462.528pt x 346.896pt>
+File: ./images/./25_50_Regions.jpg Graphic file (type jpg)
+
+<use ./images/./25_50_Regions.jpg>
+Package pdftex.def Info: ./images/./25_50_Regions.jpg used on input line 519.
+(pdftex.def)             Requested size: 201.99121pt x 151.49666pt.
+
+<./images/./25_50_FinalResult.jpg, id=171, 462.528pt x 346.896pt>
+File: ./images/./25_50_FinalResult.jpg Graphic file (type jpg)
+
+<use ./images/./25_50_FinalResult.jpg>
+Package pdftex.def Info: ./images/./25_50_FinalResult.jpg used on input line 52
+1.
+(pdftex.def)             Requested size: 201.99121pt x 151.49666pt.
+
+<./images/./25_50_5_Regions.jpg, id=178, 462.528pt x 346.896pt>
+File: ./images/./25_50_5_Regions.jpg Graphic file (type jpg)
+
+<use ./images/./25_50_5_Regions.jpg>
+Package pdftex.def Info: ./images/./25_50_5_Regions.jpg used on input line 539.
+
+(pdftex.def)             Requested size: 201.99121pt x 151.49666pt.
+
+<./images/./25_50_5_FinalResult.jpg, id=179, 462.528pt x 346.896pt>
+File: ./images/./25_50_5_FinalResult.jpg Graphic file (type jpg)
+
+<use ./images/./25_50_5_FinalResult.jpg>
+Package pdftex.def Info: ./images/./25_50_5_FinalResult.jpg used on input line 
+541.
+(pdftex.def)             Requested size: 201.99121pt x 151.49666pt.
+ [9 <./images/./25_50_Regions.jpg> <./images/./25_50_FinalResult.jpg>]
+<./images/./25_4_Regions.jpg, id=193, 462.528pt x 346.896pt>
+File: ./images/./25_4_Regions.jpg Graphic file (type jpg)
+
+<use ./images/./25_4_Regions.jpg>
+Package pdftex.def Info: ./images/./25_4_Regions.jpg used on input line 560.
+(pdftex.def)             Requested size: 201.99121pt x 151.49666pt.
+
+<./images/./25_4_FinalResult.jpg, id=194, 462.528pt x 346.896pt>
+File: ./images/./25_4_FinalResult.jpg Graphic file (type jpg)
+
+<use ./images/./25_4_FinalResult.jpg>
+Package pdftex.def Info: ./images/./25_4_FinalResult.jpg used on input line 562
+.
+(pdftex.def)             Requested size: 201.99121pt x 151.49666pt.
+ [10 <./images/./25_50_5_Regions.jpg> <./images/./25_50_5_FinalResult.jpg> <./i
+mages/./25_4_Regions.jpg> <./images/./25_4_FinalResult.jpg>] <./images/./time.j
+pg, id=212, 462.528pt x 346.896pt>
+File: ./images/./time.jpg Graphic file (type jpg)
+
+<use ./images/./time.jpg>
+Package pdftex.def Info: ./images/./time.jpg used on input line 580.
+(pdftex.def)             Requested size: 375.80544pt x 281.86818pt.
+ [11 <./images/./time.jpg>] (./CityTower.bbl) [12]
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 622.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 622.
+
+(./CityTower.aux)
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 622.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 622.
 Package rerunfilecheck Info: File `CityTower.out' has not changed.
-(rerunfilecheck)             Checksum: F2B018087BE0F6EF9F55ACAB3379E046;610.
+(rerunfilecheck)             Checksum: 68F301895299DB1DE8C2D29F870C7E2D;639.
 
 
 LaTeX Warning: There were undefined references.
 
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 438.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 622.
  ) 
 Here is how much of TeX's memory you used:
- 32829 strings out of 493029
- 632768 string characters out of 6136233
- 822071 words of memory out of 5000000
- 35750 multiletter control sequences out of 15000+600000
- 54782 words of font info for 86 fonts, out of 8000000 for 9000
+ 32968 strings out of 493029
+ 635520 string characters out of 6136233
+ 823721 words of memory out of 5000000
+ 35852 multiletter control sequences out of 15000+600000
+ 59998 words of font info for 88 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 62i,12n,67p,10380b,447s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 62i,12n,67p,10380b,449s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/share/texliv
 e/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texm
 f-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/
@@ -1970,10 +2078,10 @@ type1/public/rsfs/rsfs10.pfb></usr/share/texmf/fonts/type1/tfrupee/tfrupee.pfb>
 ist/fonts/type1/urw/symbol/usyr.pfb></usr/share/texlive/texmf-dist/fonts/type1/
 urw/times/utmb8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmr8
 a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on CityTower.pdf (7 pages, 402841 bytes).
+Output written on CityTower.pdf (12 pages, 2002882 bytes).
 PDF statistics:
- 180 PDF objects out of 1000 (max. 8388607)
- 154 compressed objects within 2 object streams
- 33 named destinations out of 1000 (max. 500000)
- 103 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 276 PDF objects out of 1000 (max. 8388607)
+ 221 compressed objects within 3 object streams
+ 58 named destinations out of 1000 (max. 500000)
+ 158 words of extra memory for PDF output out of 10000 (max. 10000000)
 

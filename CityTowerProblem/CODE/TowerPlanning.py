@@ -66,7 +66,7 @@ class TowerPlanning():
 		30% of population is scattered for business or store or other purpose
 		'''
 		#70%
-		main_population, y = make_blobs(n_samples=int(self.total_population)*0.7,cluster_std= (self.max_c - self.min_c), centers=self.main_cities, center_box=(self.min_c, self.max_c) ,n_features=self.dim,random_state=41)
+		main_population, y = make_blobs(n_samples=int(self.total_population*0.7),cluster_std= (self.max_c - self.min_c), centers=self.main_cities, center_box=(self.min_c, self.max_c) ,n_features=self.dim,random_state=41)
 		#30%
 		other_population = np.zeros((int(0.3*total_population),self.dim))
 
@@ -117,8 +117,6 @@ class TowerPlanning():
 
 
 	def ResultPlot(self,FinalNodes,region_centers):
-		print('region_centers: ', region_centers)
-		print('FinalNodes: ', FinalNodes)
 		plt.clf()
 		self.VoronoiDiagram(region_centers)
 		plt.scatter(self.PopulationData[:,0],self.PopulationData[:,1],  marker = '.' , color="green", s=10, label="Scattered/Temporary People")
@@ -128,11 +126,9 @@ class TowerPlanning():
 		# plt.ylim(self.min_c, self.max_c)
 		# plt.xlim(self.min_c,self.max_c)
 		plt.savefig('./result/'+str(self.RequiredRegions)+'/FinalResult.jpg')
+		plt.show()
 
-
-	def cell_tower_problem(self,AllocatedFacilityData,RegionWisePopulation):
-		print('AllocatedFacilityData: ', AllocatedFacilityData)
-		print('RegionWisePopulation: ', RegionWisePopulation)
+	def CellTowerProblem(self,AllocatedFacilityData,RegionWisePopulation):
 		'''
 		This method will solve cell tower problem using gurobi library
 		'''
@@ -142,7 +138,6 @@ class TowerPlanning():
 		# tested with Gurobi v9.0.0 and Python 3.7.0
 		Populationkey = [*range(0,len(self.PopulationData))]
 		PopulationDict = dict(zip(Populationkey,RegionWisePopulation))
-		print('PopulationDict: ', PopulationDict)
 		regions, population = gp.multidict(PopulationDict)
 
 		# # Parameters
@@ -174,7 +169,6 @@ class TowerPlanning():
 			coverageData.append(cost[i])
 			RegionValue.append(coverageData)
 		RegionDict = dict(zip(RegionKey,RegionValue))
-		print('RegionDict: ', RegionDict)
 
 		# print('RegionDict: ', RegionDict)
 		# sites, coverage, cost = gp.multidict({
@@ -271,13 +265,9 @@ class TowerPlanning():
 			measured_dist = []
 			for j in range(len(region_centers)):
 					measured_dist.append(self.CalculateEuclidianDist(region_centers[i],region_centers[j]))
-			print('measured_dist: ', measured_dist)
 			data_array = np.concatenate((data_array,np.argsort(measured_dist)[1:self.NeighborsToCover+1]))
-			print('np.argsort(measured_dist)[:self.NeighborsToCover]): ', np.argsort(measured_dist)[1:self.NeighborsToCover+1])
-			print('np.argsort(measured_dist): ', np.argsort(measured_dist))
 			dataframe = dataframe.append(pd.Series(list(data_array)),ignore_index=True)
 		dataframe = dataframe.astype('int64', copy=False)
-		print('dataframe: ', dataframe)
 		dataframe.columns = headers
 		return dataframe
 
@@ -289,7 +279,6 @@ class TowerPlanning():
 		return dist
 	
 	def FindFinalNode(self,region_centers,IndexOfNodesToBuild,AllocatedFacilityData):
-		print('region_centers: ', region_centers)
 		FinalNodes = []
 		
 		for i in range(len(IndexOfNodesToBuild)):
@@ -309,9 +298,6 @@ class TowerPlanning():
 
 		#finding nearest centroid from each vertex 
 		AllocatedFacilityData = self.DistBtnCentroidNNeighbor(region_centers)
-		print('AllocatedFacilityData: ', AllocatedFacilityData)
-
-
 		#Writing center on graph plot 
 		for i in range(len(region_centers)):
 			plt.text(region_centers[i][0],region_centers[i][1],str(i), fontsize=15)
@@ -335,10 +321,11 @@ class TowerPlanning():
 			color = "#%06x" % random.randint(0, 0xFFFFFF)
 			plt.scatter(temp_data[:,0],temp_data[:,1],c=color,marker='.',label='cluster'+str(i))
 		plt.savefig('./result/'+str(self.RequiredRegions)+'/Regions.jpg')
+		plt.show()
 
 		#optimizing 
 		start = time.time()
-		IndexOfNodesToBuild = self.cell_tower_problem(AllocatedFacilityData,RegionWisePopulation)
+		IndexOfNodesToBuild = self.CellTowerProblem(AllocatedFacilityData,RegionWisePopulation)
 		end = time.time()
 		ElapsedTime = end - start	
 
@@ -368,7 +355,7 @@ if __name__ == "__main__":
 	total_population = 130000
 	NeighborsToCover = 3
 	CostPerEach = 3000000
-	budget = 1000000 * RequiredRegions  #lakhs#Budget
+	budget = 1000000 * RequiredRegions  #lakhs#Budget 12013000 + 
 	#area
 	min_c = 100
 	max_c = 200
@@ -389,7 +376,6 @@ if __name__ == "__main__":
 	resu = pd.DataFrame([append_data],columns=headers)
 	result = pd.concat([result,resu])
 	result.to_csv('Result.csv',index=False)
-	# plt.show()
 	plt.close('all')
 
 

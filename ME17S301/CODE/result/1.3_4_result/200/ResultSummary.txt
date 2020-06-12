@@ -1,0 +1,72 @@
+
+
+
+2020-06-10
+ Build a cell tower at location Tower 0
+ Build a cell tower at location Tower 1
+ Build a cell tower at location Tower 2
+ Build a cell tower at location Tower 4
+ Build a cell tower at location Tower 5
+ Build a cell tower at location Tower 8
+ Build a cell tower at location Tower 10
+ Build a cell tower at location Tower 12
+ Build a cell tower at location Tower 16
+ Build a cell tower at location Tower 17
+ Build a cell tower at location Tower 23
+ Build a cell tower at location Tower 27
+ Build a cell tower at location Tower 29
+ Build a cell tower at location Tower 30
+ Build a cell tower at location Tower 34
+ Build a cell tower at location Tower 35
+ Build a cell tower at location Tower 36
+ Build a cell tower at location Tower 40
+ Build a cell tower at location Tower 46
+ Build a cell tower at location Tower 51
+ Build a cell tower at location Tower 54
+ Build a cell tower at location Tower 57
+ Build a cell tower at location Tower 58
+ Build a cell tower at location Tower 61
+ Build a cell tower at location Tower 62
+ Build a cell tower at location Tower 64
+ Build a cell tower at location Tower 66
+ Build a cell tower at location Tower 73
+ Build a cell tower at location Tower 75
+ Build a cell tower at location Tower 76
+ Build a cell tower at location Tower 82
+ Build a cell tower at location Tower 94
+ Build a cell tower at location Tower 95
+ Build a cell tower at location Tower 98
+ Build a cell tower at location Tower 99
+ Build a cell tower at location Tower 108
+ Build a cell tower at location Tower 109
+ Build a cell tower at location Tower 114
+ Build a cell tower at location Tower 116
+ Build a cell tower at location Tower 118
+ Build a cell tower at location Tower 121
+ Build a cell tower at location Tower 125
+ Build a cell tower at location Tower 132
+ Build a cell tower at location Tower 140
+ Build a cell tower at location Tower 141
+ Build a cell tower at location Tower 142
+ Build a cell tower at location Tower 143
+ Build a cell tower at location Tower 149
+ Build a cell tower at location Tower 153
+ Build a cell tower at location Tower 154
+ Build a cell tower at location Tower 157
+ Build a cell tower at location Tower 159
+ Build a cell tower at location Tower 161
+ Build a cell tower at location Tower 163
+ Build a cell tower at location Tower 165
+ Build a cell tower at location Tower 166
+ Build a cell tower at location Tower 176
+ Build a cell tower at location Tower 178
+ Build a cell tower at location Tower 179
+ Build a cell tower at location Tower 180
+ Build a cell tower at location Tower 182
+ Build a cell tower at location Tower 184
+ Build a cell tower at location Tower 186
+ Build a cell tower at location Tower 187
+ Build a cell tower at location Tower 190
+ Build a cell tower at location Tower 199
+ The population coverage associated to the cell towers build plan is: 99.0
+ The percentage of budget consumed associated to the cell towers build plan is: 99.07

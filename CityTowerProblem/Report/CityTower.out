@@ -1,10 +1,10 @@
 \BOOKMARK [1][-]{section.1}{Problem Statement}{}% 1
 \BOOKMARK [1][-]{section.2}{Assumptions}{}% 2
 \BOOKMARK [1][-]{section.3}{Formulation}{}% 3
-\BOOKMARK [1][-]{section.4}{Approach to tackle the problem}{}% 4
-\BOOKMARK [1][-]{section.5}{Algorithm}{}% 5
-\BOOKMARK [1][-]{section.6}{Results and Discussion}{}% 6
+\BOOKMARK [1][-]{section.4}{Approach to solve the problem with example}{}% 4
+\BOOKMARK [1][-]{section.5}{Implemented algorithm procedure}{}% 5
+\BOOKMARK [1][-]{section.6}{Results}{}% 6
 \BOOKMARK [2][-]{subsection.6.1}{Result with few values of input}{section.6}% 7
-\BOOKMARK [2][-]{subsection.6.2}{Computational time as a function of input parameters}{section.6}% 8
-\BOOKMARK [2][-]{subsection.6.3}{Largest problem solution}{section.6}% 9
+\BOOKMARK [2][-]{subsection.6.2}{Largest problem size you can solve}{section.6}% 8
+\BOOKMARK [2][-]{subsection.6.3}{Computational time as a function of input parameters}{section.6}% 9
 \BOOKMARK [1][-]{section.7}{References}{}% 10
