@@ -7,8 +7,8 @@ The solution to find out the optimal location of cell tower sites is discussed h
 python TowerPlanning.py 'Number of Regions'
 
 
--> Result will be stores in ./result/'Number of Regions' Folder
-->  Summary of the result will be given ./Result.csv
+-> Result will be stores in ./result/'Number of Regions' Folder <br/>
+->  Summary of the result will be given ./Result.csv <br/>
 
 *  To generate plot time complexity run,
 
@@ -20,7 +20,7 @@ chmod +x Simulation.sh
 
 * To Run the jupyter notebook file use TowerPlanningJupyter.ipynb file
 
-Note: Chnage the appropriate input accordingly as per need 
+Note: Change the appropriate input accordingly as per need 
 
 # File Directory:
 -ME17S301 <br/>
