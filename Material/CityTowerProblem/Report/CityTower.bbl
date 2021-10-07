@@ -1,0 +1,23 @@
+\begin{thebibliography}{1}
+
+\bibitem{cost}
+``Ril plans low-cost telecom towers costing just $\rupee~$ 1 lakhs,''
+
+\bibitem{wikiKmeans}
+Wikipedia, ``k-means clustering,''
+
+\bibitem{maximal}
+R.~Church and C.~ReVelle, ``The maximal covering location problem,'' in {\em
+  Papers of the regional science association}, vol.~32, pp.~101--118,
+  Springer-Verlag, 1974.
+
+\bibitem{gurobiSol}
+``Mixed-integer programming (mip) – a primer on the basics,''
+
+\bibitem{gurobi}
+L.~Gurobi~Optimization, ``Gurobi optimizer reference manual,'' 2020.
+
+\bibitem{david}
+D.~Tipper, ``Fundamentals of cellular networks,''
+
+\end{thebibliography}

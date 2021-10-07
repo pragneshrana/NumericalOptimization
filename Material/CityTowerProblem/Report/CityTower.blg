@@ -1,0 +1,58 @@
+This is BibTeX, Version 0.99d (TeX Live 2015/Debian)
+Capacity: max_strings=35307, hash_size=35307, hash_prime=30011
+The top-level auxiliary file: CityTower.aux
+The style file: ieeetr.bst
+Database file #1: biblio.bib.bib
+Warning--empty author in cost
+Warning--empty journal in cost
+Warning--empty year in cost
+Warning--empty journal in wikiKmeans
+Warning--empty year in wikiKmeans
+Warning--can't use both volume and number fields in maximal
+Warning--empty author in gurobiSol
+Warning--empty journal in gurobiSol
+Warning--empty year in gurobiSol
+Warning--empty journal in david
+Warning--empty year in david
+You've used 6 entries,
+            1876 wiz_defined-function locations,
+            502 strings with 3980 characters,
+and the built_in function-call counts, 985 in all, are:
+= -- 78
+> -- 22
+< -- 0
++ -- 11
+- -- 5
+* -- 72
+:= -- 131
+add.period$ -- 2
+call.type$ -- 6
+change.case$ -- 6
+chr.to.int$ -- 0
+cite$ -- 17
+duplicate$ -- 60
+empty$ -- 124
+format.name$ -- 5
+if$ -- 230
+int.to.chr$ -- 0
+int.to.str$ -- 6
+missing$ -- 5
+newline$ -- 21
+num.names$ -- 4
+pop$ -- 41
+preamble$ -- 1
+purify$ -- 0
+quote$ -- 0
+skip$ -- 29
+stack$ -- 0
+substring$ -- 32
+swap$ -- 10
+text.length$ -- 0
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 0
+warning$ -- 11
+while$ -- 7
+width$ -- 7
+write$ -- 42
+(There were 11 warnings)
